@@ -124,6 +124,7 @@
   };
 
   var SCORE_VALUES = [94, 82, 68, 20];
+  var RANDOM_RESULTS_COUNT = 3;
   var dialog = document.getElementById("news-detail-dialog");
   var resultsSection = document.getElementById("news-results");
   var resultsList = document.getElementById("news-results-list");
@@ -195,17 +196,27 @@
       });
     }
 
-    return [
-      { topic: "tecnologias", storyIndex: 0, score: SCORE_VALUES[0] },
-      { topic: "medicina", storyIndex: 1, score: SCORE_VALUES[1] },
-      { topic: "ciencias", storyIndex: 2, score: SCORE_VALUES[2] }
-    ].map(function (selection) {
-      return {
-        topicLabel: TOPICS[selection.topic].label,
-        story: TOPICS[selection.topic].stories[selection.storyIndex],
-        score: selection.score
-      };
-    });
+    var candidates = Object.keys(TOPICS).reduce(function (allStories, topicKey) {
+      var topic = TOPICS[topicKey];
+
+      return allStories.concat(topic.stories.map(function (story, index) {
+        return {
+          topicLabel: topic.label,
+          story: story,
+          score: SCORE_VALUES[index]
+        };
+      }));
+    }, []);
+
+    for (var index = 0; index < Math.min(RANDOM_RESULTS_COUNT, candidates.length); index += 1) {
+      var randomIndex = index + Math.floor(Math.random() * (candidates.length - index));
+      var current = candidates[index];
+
+      candidates[index] = candidates[randomIndex];
+      candidates[randomIndex] = current;
+    }
+
+    return candidates.slice(0, RANDOM_RESULTS_COUNT);
   }
 
   function formatDate(daysAgo) {
