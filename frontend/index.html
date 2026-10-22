@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="src/css/search.css">
   <link rel="stylesheet" href="src/css/footer.css">
   <script src="src/js/theme_change.js" defer></script>
+  <script src="src/js/search_results.js" defer></script>
   <script src="src/js/search_modal.js" defer></script>
 </head>
 <body>
@@ -170,7 +171,7 @@
           <div class="search-summary__intro">
             <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Pesquisa configurada</p>
             <h2 id="search-summary-title" tabindex="-1">Sua pesquisa está pronta</h2>
-            <p>Estes filtros serão usados pelo agente. Todos resultados mostrados são fictícios</p>
+            <p>Os filtros ajustam os exemplos exibidos. Notícias, fontes e pontuações são demonstrativas e fictícias.</p>
           </div>
           <ul class="search-summary__chips" id="search-summary-chips" aria-label="Filtros escolhidos"></ul>
           <button class="btn btn--ghost" type="button" data-open-search aria-haspopup="dialog" aria-controls="search-dialog">
@@ -184,7 +185,21 @@
       </div>
     </section>
 
-    <!-- Fontes demonstrativas que futuramente serão usadas no filtro de pesquisa. -->
+    <section class="news-results" id="news-results" aria-labelledby="news-results-title" hidden>
+      <div class="container">
+        <div class="news-results__header">
+          <div>
+            <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Resultados demonstrativos</p>
+            <h2 id="news-results-title" tabindex="-1">Notícias para sua pesquisa</h2>
+            <p class="news-results__disclaimer">Conteúdo, fontes e pontuações são inteiramente fictícios. A pontuação não representa uma verificação real.</p>
+          </div>
+          <p class="news-results__status" id="news-results-status" role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
+        <ol class="news-results__list" id="news-results-list" aria-label="Notícias demonstrativas ordenadas por pontuação fictícia"></ol>
+      </div>
+    </section>
+
+    <!-- Lista das fontes disponíveis como atribuições demonstrativas na pesquisa. -->
     <section class="section" id="fontes" aria-labelledby="fontes-title">
       <div class="container">
         <div class="section__header section__header--center">
@@ -632,6 +647,38 @@
         </button>
       </footer>
     </form>
+  </dialog>
+
+  <dialog class="search-dialog news-detail-dialog" id="news-detail-dialog" aria-labelledby="news-detail-title" aria-describedby="news-detail-description">
+    <div class="news-detail-dialog__content">
+      <header class="search-dialog__header">
+        <div>
+          <p class="search-dialog__eyebrow">Análise demonstrativa</p>
+          <h2 class="search-dialog__title" id="news-detail-title" tabindex="-1"></h2>
+          <p class="search-dialog__description" id="news-detail-description">Detalhes e fatores fictícios usados apenas para demonstrar a interface.</p>
+        </div>
+        <button class="search-dialog__close" type="button" data-close-news-detail aria-label="Fechar detalhes da notícia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </header>
+      <div class="news-detail-dialog__body">
+        <p class="news-detail-dialog__disclaimer">Notícia, fonte, análise e pontuação fictícias — nenhuma fonte real foi consultada.</p>
+        <p class="news-detail-dialog__meta" id="news-detail-meta"></p>
+        <p class="news-detail-dialog__score" id="news-detail-score"></p>
+        <p class="news-detail-dialog__summary" id="news-detail-summary"></p>
+        <p class="news-detail-dialog__long-description" id="news-detail-long-description"></p>
+        <section class="news-detail-dialog__analysis" aria-labelledby="news-detail-analysis-title">
+          <h3 id="news-detail-analysis-title">Fatores ilustrativos</h3>
+          <ul id="news-detail-factors"></ul>
+        </section>
+        <p class="news-detail-dialog__rationale" id="news-detail-rationale"></p>
+      </div>
+      <footer class="news-detail-dialog__footer">
+        <button class="btn btn--primary" type="button" data-close-news-detail>Fechar análise</button>
+      </footer>
+    </div>
   </dialog>
 
   <!-- Região viva: anuncia trocas de tema/contraste e conclusão da pesquisa. -->
