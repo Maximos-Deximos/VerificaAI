@@ -141,7 +141,6 @@
   position: relative;
   z-index: 1;
   padding: clamp(1.35rem, 3vw, 1.9rem);
-  border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   background: var(--surface);
   box-shadow: var(--shadow-lg);
@@ -434,6 +433,7 @@
   margin-top: 0.08rem;
   color: var(--text-muted);
   font-size: 0.9rem;
+  align-items: center;
 }
 
 /* Cartão de exemplo do ranqueamento, com fatores positivos e negativos. */
