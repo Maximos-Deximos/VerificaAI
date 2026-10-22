@@ -23,6 +23,11 @@
           title: "Biblioteca imaginária testa assistente digital sem conexão",
           summary: "Uma biblioteca fictícia está avaliando um assistente local para organizar seu catálogo. O projeto não coleta dados de visitantes no cenário demonstrativo.",
           details: "A narrativa propõe um teste de interface em computadores desconectados da internet. Ela não representa um produto, estudo ou iniciativa existente."
+        },
+        {
+          title: "Universidade inventada apresenta seu novo projeto de realidade aumentada sem a necessidade de equipamentos eletrônicos",
+          summary: "Uma universidade fictícia divulgou ontem sua nova invenção focada em uma entrada na realidade aumentada sem uso de nenhum meio eletrônico. O projeto é apenas uma simulação de uma notícia falsa.",
+          details: "O projeto descrito é uma narrativa inventada para fins de demonstração. Não há pesquisa,projeto ou dado real associado a esta narrativa."
         }
       ]
     },
@@ -43,6 +48,11 @@
           title: "Centro inventado avalia linguagem simples em avisos de saúde",
           summary: "Um centro fictício está revisando textos informativos para torná-los mais fáceis de compreender. A notícia não relata resultados médicos.",
           details: "O exercício imaginário compara versões de avisos gerais e não envolve diagnóstico, prescrição ou estudo com participantes reais."
+        },
+        {
+          title: "Pesquisadores de uma empresa fictícia descobriram a cura de todos os cânceres",
+          summary: "Uma empresa inventada anunciou uma descoberta revolucionária que curaria todos os tipos de câncer. A notícia é uma simulação e não reflete pesquisa científica real.",
+          details: "O comunicado descreve um estudo fictício com resultados extraordinários. Não há evidências concretas de tal descoberta."
         }
       ]
     },
@@ -63,6 +73,11 @@
           title: "Museu imaginário apresenta exposição sobre fósseis de brinquedo",
           summary: "Um museu fictício montou uma exposição educativa com réplicas inventadas. O material explica como fósseis são estudados sem afirmar uma descoberta.",
           details: "A mostra descrita usa peças cenográficas e textos produzidos para a prova de conceito. Nenhum fóssil ou achado científico real é mencionado."
+        },
+        {
+          title: "Laboratório inventado divulga sua mais nova invenção denominada a máquina do tempo",
+          summary: "Um laboratório fictício anunciou a criação de uma máquina do tempo capaz de viajar entre o futuro e o passado. Nenhuma declaração concreta e verídica afirma a existência de uma máquina desse tipo. ",
+          details: "A invenção retradada não seria possível a sua existência no mundo real. Nenhuma informação citada possui um fundo de verdade."
         }
       ]
     },
@@ -83,6 +98,11 @@
           title: "Comissão fictícia publica resumo de orçamento para parque inventado",
           summary: "Uma comissão imaginária preparou um resumo ilustrativo de custos de um parque. Os valores e a iniciativa não correspondem a um orçamento real.",
           details: "O texto foi criado para mostrar como um tema público poderia ser apresentado em linguagem simples. Não há dados financeiros ou decisões oficiais."
+        },
+        {
+          title: "Conselho internacional inventado, anunciou o investimento em massa na fabricação de armamentos nucleares.",
+          summary: "O Conselho Internacional inexistente, declara sua nova estrátegia armamentista para o mundo. Nenhum informação dita possui veracidade",
+          details: "Não há qualquer conselho de nível internacional exitente no qual foi proferido essas mensagens."
         }
       ]
     }
@@ -103,7 +123,7 @@
     "1ano": 365
   };
 
-  var SCORE_VALUES = [94, 82, 68];
+  var SCORE_VALUES = [94, 82, 68, 20];
   var dialog = document.getElementById("news-detail-dialog");
   var resultsSection = document.getElementById("news-results");
   var resultsList = document.getElementById("news-results-list");
