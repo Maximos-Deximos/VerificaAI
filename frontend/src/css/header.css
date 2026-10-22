@@ -1,3 +1,10 @@
+/**
+ * header.css
+ * Cabeçalho fixo com navegação, slider de tema e alternador de alto contraste.
+ * O layout vira duas linhas no mobile para manter os controles acessíveis.
+ */
+
+/* Header fixo no topo; z-index mantém o conteúdo abaixo ao rolar a página. */
 .site-header {
   position: sticky;
   top: 0;
@@ -94,6 +101,10 @@
   margin-inline-start: 0.35rem;
 }
 
+/*
+ * Controles do header: ambos têm área de toque mínima de 44px e usam as
+ * variáveis do tema para permanecerem legíveis em claro, escuro e alto contraste.
+ */
 .theme-switch,
 .contrast-toggle {
   display: inline-flex;
@@ -116,6 +127,10 @@
   background: var(--header-hover);
 }
 
+/*
+ * Slider de tema: o trilho e o polegar são puramente visuais. A posição do
+ * polegar e o ícone ativo são definidos pelo data-theme aplicado no <html>.
+ */
 .theme-switch__icon {
   width: 18px;
   height: 18px;
@@ -173,6 +188,7 @@
   background: var(--header-hover);
 }
 
+/* Estado visual do botão de alto contraste quando está ativo. */
 .contrast-toggle[aria-pressed="true"] {
   border-color: var(--primary);
   background: var(--primary);
@@ -189,6 +205,7 @@
   border: 2px solid var(--header-border);
 }
 
+/* No mobile, a navegação desce para uma faixa própria com rolagem horizontal. */
 @media (max-width: 900px) {
   .header__inner {
     gap: 0.6rem;
@@ -223,6 +240,7 @@
   }
 }
 
+/* Em telas muito estreitas, o rótulo do contraste fica apenas para leitores de tela. */
 @media (max-width: 520px) {
   .brand {
     font-size: 1.15rem;

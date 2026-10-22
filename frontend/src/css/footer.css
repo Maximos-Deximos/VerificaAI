@@ -1,3 +1,7 @@
+/**
+ * footer.css
+ * Rodapé compartilhado. A grade de três colunas vira uma coluna no mobile.
+ */
 .site-footer {
   padding-block: 3.25rem 1.5rem;
   background: var(--footer-bg);
@@ -85,6 +89,7 @@
   font-size: 0.91rem;
 }
 
+/* Linha final com créditos e aviso de dados fictícios da prova de conceito. */
 .footer__bottom {
   display: flex;
   flex-wrap: wrap;
@@ -95,6 +100,7 @@
   font-size: 0.78rem;
 }
 
+/* Reforço de contraste para bordas, marca e links do rodapé. */
 :root[data-contrast="high"] .footer__grid {
   border-bottom-width: 2px;
 }
@@ -108,6 +114,7 @@
   text-underline-offset: 0.2em;
 }
 
+/* A marca ocupa a linha inteira antes das demais colunas no mobile. */
 @media (max-width: 800px) {
   .footer__grid {
     grid-template-columns: 1fr 1fr;

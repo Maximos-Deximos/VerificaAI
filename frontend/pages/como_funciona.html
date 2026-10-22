@@ -6,6 +6,7 @@
   <meta name="description" content="Entenda como o VerificaAI pesquisa notícias, cruza fontes confiáveis e calcula o ranqueamento de veracidade.">
   <meta name="theme-color" id="theme-color" content="#00008b">
   <title>Como funciona — VerificaAI</title>
+  <!-- Aplica o tema salvo antes da pintura para manter a troca consistente entre páginas. -->
   <script>
     (function () {
       try {
@@ -31,6 +32,7 @@
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
+  <!-- O header é repetido em cada página com os mesmos controles de tema e contraste. -->
   <header class="site-header">
     <div class="container header__inner">
       <a class="brand" href="../index.html" aria-label="VerificaAI — voltar ao início">
@@ -53,6 +55,7 @@
       </nav>
 
       <div class="header__actions">
+        <!-- Slider acessível: o estado é atualizado por theme_change.js. -->
         <button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Ativar tema escuro">
           <svg class="theme-switch__icon theme-switch__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"/>
@@ -66,6 +69,7 @@
           </svg>
         </button>
 
+        <!-- Botão independente do tema para reforçar contraste e legibilidade. -->
         <button class="contrast-toggle" id="contrast-toggle" type="button" aria-pressed="false" aria-label="Ativar alto contraste">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="9"/>
@@ -78,7 +82,9 @@
     </div>
   </header>
 
+  <!-- Conteúdo migrado do index: explicação dos passos e do ranqueamento. -->
   <main id="conteudo" tabindex="-1">
+    <!-- Cabeçalho interno com breadcrumb, título e introdução da página. -->
     <section class="page-hero" aria-labelledby="page-title">
       <div class="container">
         <nav class="breadcrumb" aria-label="Você está aqui">
@@ -93,6 +99,7 @@
       </div>
     </section>
 
+    <!-- Etapa 1 do fluxo: configuração, cruzamento de fontes e leitura do resultado. -->
     <section class="section" id="como-funciona" aria-labelledby="como-funciona-title">
       <div class="container">
         <div class="section__header">
@@ -145,6 +152,7 @@
       </div>
     </section>
 
+    <!-- Explicação dos critérios de veracidade e exemplo visual do ranqueamento. -->
     <section class="section section--alt" id="ranqueamento" aria-labelledby="ranqueamento-title">
       <div class="container ranking">
         <div class="ranking__content">
@@ -226,6 +234,7 @@
       </div>
     </section>
 
+    <!-- CTA de retorno para a página inicial, onde a pesquisa será iniciada. -->
     <section class="section section--cta" aria-labelledby="cta-title">
       <div class="container">
         <div class="cta-panel">
@@ -245,6 +254,7 @@
     </section>
   </main>
 
+  <!-- Rodapé compartilhado; os links usam caminhos relativos a partir de /pages. -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer__grid">
@@ -284,6 +294,7 @@
     </div>
   </footer>
 
+  <!-- Região viva que anuncia mudanças de tema/contraste para leitores de tela. -->
   <div class="sr-only" id="a11y-status" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

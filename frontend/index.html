@@ -6,6 +6,7 @@
   <meta name="description" content="VerificaAI: aplicação que cruza fontes confiáveis e ranqueia a veracidade de notícias com o apoio de um agente de IA.">
   <meta name="theme-color" id="theme-color" content="#00008b">
   <title>VerificaAI — Combate à desinformação com IA</title>
+  <!-- Aplica o tema salvo antes da pintura da página para evitar piscar na cor errada. -->
   <script>
     (function () {
       try {
@@ -31,6 +32,7 @@
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
+  <!-- Cabeçalho compartilhado: marca, navegação e controles de acessibilidade visual. -->
   <header class="site-header">
     <div class="container header__inner">
       <a class="brand" href="#inicio" aria-label="VerificaAI — voltar ao início">
@@ -53,6 +55,7 @@
       </nav>
 
       <div class="header__actions">
+        <!-- Slider de tema: role="switch" expõe o estado claro/escuro para leitores de tela. -->
         <button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Ativar tema escuro">
           <svg class="theme-switch__icon theme-switch__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"/>
@@ -66,6 +69,7 @@
           </svg>
         </button>
 
+        <!-- Alternador independente de alto contraste; aria-pressed reflete o estado ativo. -->
         <button class="contrast-toggle" id="contrast-toggle" type="button" aria-pressed="false" aria-label="Ativar alto contraste">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="9"/>
@@ -78,7 +82,9 @@
     </div>
   </header>
 
+  <!-- Conteúdo principal da página inicial. O tabindex permite que o skip link foque o main. -->
   <main id="conteudo" tabindex="-1">
+    <!-- Hero: proposta da aplicação, ação "Pesquisar" e cartão ilustrativo do agente. -->
     <section class="hero" id="inicio" aria-labelledby="hero-title">
       <div class="container hero__inner">
         <div class="hero__content">
@@ -155,6 +161,7 @@
       </div>
     </section>
 
+    <!-- Fontes demonstrativas que futuramente serão usadas no filtro de pesquisa. -->
     <section class="section" id="fontes" aria-labelledby="fontes-title">
       <div class="container">
         <div class="section__header section__header--center">
@@ -195,6 +202,7 @@
       </div>
     </section>
 
+    <!-- Chamada final que repete a ação principal da página. -->
     <section class="section section--cta" aria-labelledby="cta-title">
       <div class="container">
         <div class="cta-panel">
@@ -215,6 +223,7 @@
     </section>
   </main>
 
+  <!-- Rodapé compartilhado com navegação secundária e aviso da prova de conceito. -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer__grid">
@@ -254,6 +263,7 @@
     </div>
   </footer>
 
+  <!-- Região viva: anuncia trocas de tema/contraste para tecnologias assistivas. -->
   <div class="sr-only" id="a11y-status" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

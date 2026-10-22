@@ -1,3 +1,16 @@
+/**
+ * global.css
+ * Base visual compartilhada por todas as páginas.
+ *
+ * A troca de tema é feita por tokens CSS definidos no <html>:
+ * - data-theme="light" | "dark": controla as cores principais.
+ * - data-contrast="high": reforça contraste, bordas e foco.
+ *
+ * Para personalizar a identidade visual, altere primeiro os tokens do tema
+ * claro (:root) e replique os valores necessários nos demais temas.
+ */
+
+/* Tema claro padrão. Também é usado quando o JavaScript está desativado. */
 :root {
   color-scheme: light;
   --font-sans: "Segoe UI", "Helvetica Neue", Arial, system-ui, -apple-system, sans-serif;
@@ -52,6 +65,7 @@
   --transition: 180ms ease;
 }
 
+/* Tema escuro aplicado pelo theme_change.js ou pela escolha salva do usuário. */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --bg: #2e2e2e;
@@ -96,6 +110,7 @@
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.4);
 }
 
+/* Alto contraste sobre o tema claro: remove sombras e usa fundos puros. */
 :root[data-contrast="high"] {
   --bg: #ffffff;
   --surface: #ffffff;
@@ -139,6 +154,7 @@
   --shadow-lg: none;
 }
 
+/* Alto contraste sobre o tema escuro: fundo preto, texto e bordas brancos. */
 :root[data-theme="dark"][data-contrast="high"] {
   --bg: #000000;
   --surface: #000000;
@@ -178,6 +194,7 @@
   --focus-halo: #ffff00;
 }
 
+/* Reset leve: previsibilidade de medidas sem apagar estilos nativos úteis. */
 *,
 *::before,
 *::after {
@@ -286,12 +303,17 @@ button {
   color: var(--on-primary);
 }
 
+/*
+ * Foco visível em duas camadas: o contorno principal garante a indicação
+ * e o halo amarelo mantém o foco perceptível sobre fundos claros e escuros.
+ */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
   box-shadow: 0 0 0 5px var(--focus-halo);
 }
 
+/* Estrutura de largura e espaçamento vertical das seções. */
 .container {
   width: min(calc(100% - 2.5rem), var(--container));
   margin-inline: auto;
@@ -350,6 +372,10 @@ button {
   padding-inline: 0.04em;
 }
 
+/*
+ * Acessibilidade: o skip link fica escondido até receber foco pelo teclado.
+ * .sr-only mantém conteúdo disponível para leitores de tela sem exibi-lo.
+ */
 .skip-link {
   position: fixed;
   top: 0.75rem;
@@ -382,6 +408,7 @@ button {
   border: 0;
 }
 
+/* Compensa o header sticky ao navegar por âncoras em telas pequenas. */
 @media (max-width: 640px) {
   html {
     scroll-padding-top: 9.5rem;
@@ -392,6 +419,7 @@ button {
   }
 }
 
+/* Respeita usuários que preferem menos animações no sistema operacional. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

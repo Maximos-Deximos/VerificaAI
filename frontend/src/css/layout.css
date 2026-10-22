@@ -1,3 +1,11 @@
+/**
+ * layout.css
+ * Blocos de conteúdo das páginas: hero, passos, ranqueamento, fontes e CTA.
+ * Todas as cores vêm dos tokens de global.css, então cada seção acompanha
+ * automaticamente os temas claro, escuro e alto contraste.
+ */
+
+/* Cabeçalho interno da página "Como funciona", com breadcrumb e introdução. */
 .page-hero {
   overflow: hidden;
   padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2.25rem, 5vw, 3.5rem);
@@ -56,6 +64,7 @@
   font-weight: 700;
 }
 
+/* Hero da página inicial: chamada principal e cartão ilustrativo do agente. */
 .hero {
   position: relative;
   overflow: hidden;
@@ -127,6 +136,7 @@
   justify-self: end;
 }
 
+/* Cartão demonstrativo: representa a análise do agente sem exibir dados reais. */
 .agent-card {
   position: relative;
   z-index: 1;
@@ -259,6 +269,7 @@
   font-weight: 800;
 }
 
+/* Faixa de destaques rápidos logo abaixo do hero. */
 .trust-strip {
   border-bottom: 1px solid var(--border);
   background: var(--surface);
@@ -294,6 +305,7 @@
   font-size: 0.86rem;
 }
 
+/* Lista ordenada visualmente como três cartões de passos. */
 .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -361,6 +373,10 @@
   font-size: 0.94rem;
 }
 
+/*
+ * Seção de ranqueamento: explicação dos critérios à esquerda e exemplo de
+ * análise à direita. Em telas menores, os dois blocos são empilhados.
+ */
 .ranking {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
@@ -420,6 +436,7 @@
   font-size: 0.9rem;
 }
 
+/* Cartão de exemplo do ranqueamento, com fatores positivos e negativos. */
 .score-card {
   padding: clamp(1.4rem, 3vw, 2rem);
   border: 1px solid var(--border);
@@ -457,6 +474,10 @@
   border-bottom: 1px solid var(--border);
 }
 
+/*
+ * Anel de pontuação: a variável --score (definida no HTML) determina o
+ * preenchimento do conic-gradient. O valor textual fica sempre visível.
+ */
 .score-ring {
   position: relative;
   display: grid;
@@ -546,6 +567,7 @@
   font-size: 0.78rem;
 }
 
+/* Grade de fontes disponíveis na prova de conceito. */
 .sources-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -604,6 +626,7 @@
   text-align: center;
 }
 
+/* Chamada final com contraste forte para destacar a ação principal. */
 .section--cta {
   padding-block: clamp(1rem, 3vw, 2rem) clamp(4rem, 8vw, 6rem);
 }
@@ -647,6 +670,7 @@
   flex: 0 0 auto;
 }
 
+/* Ajustes do modo de alto contraste para remover texturas e reforçar bordas. */
 :root[data-contrast="high"] .hero::before {
   display: none;
 }
@@ -666,6 +690,7 @@
   animation: none;
 }
 
+/* Breakpoints: reorganizam as grades conforme o espaço disponível. */
 @media (max-width: 980px) {
   .hero__inner {
     grid-template-columns: 1fr;

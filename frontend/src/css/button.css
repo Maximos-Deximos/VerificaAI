@@ -1,3 +1,10 @@
+/**
+ * button.css
+ * Botões compartilhados da aplicação.
+ * .btn--primary é a ação principal; .btn--ghost é uma ação secundária.
+ */
+
+/* Base comum: área de toque confortável, foco visível e alinhamento com ícones. */
 .btn {
   display: inline-flex;
   min-height: 46px;
@@ -26,6 +33,7 @@
   font-size: 1.02rem;
 }
 
+/* Ação principal: usa o verde da identidade e escurece levemente no hover. */
 .btn--primary {
   background: var(--primary);
   color: var(--on-primary);
@@ -44,6 +52,7 @@
   box-shadow: 0 4px 12px rgba(11, 107, 54, 0.18);
 }
 
+/* Ação secundária: contorno neutro que acompanha o tema atual. */
 .btn--ghost {
   border-color: var(--border-strong);
   background: transparent;
@@ -60,6 +69,7 @@
   box-shadow: 0 0 0 5px var(--focus-halo);
 }
 
+/* No alto contraste, bordas mais espessas separam botões do fundo. */
 :root[data-contrast="high"] .btn {
   border-width: 3px;
 }
