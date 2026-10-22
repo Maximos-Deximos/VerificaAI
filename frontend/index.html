@@ -26,8 +26,10 @@
   <link rel="stylesheet" href="src/css/header.css">
   <link rel="stylesheet" href="src/css/button.css">
   <link rel="stylesheet" href="src/css/layout.css">
+  <link rel="stylesheet" href="src/css/search.css">
   <link rel="stylesheet" href="src/css/footer.css">
   <script src="src/js/theme_change.js" defer></script>
+  <script src="src/js/search_modal.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -92,7 +94,7 @@
           <h1 id="hero-title">Descubra o que é verdade antes de compartilhar.</h1>
           <p class="hero__lead">O VerificaAI lê notícias em fontes confiáveis, cruza informações e apresenta um ranqueamento de veracidade — sempre explicando o porquê.</p>
           <div class="hero__actions">
-            <button class="btn btn--primary btn--lg" type="button" id="btn-pesquisar" data-open-search>
+            <button class="btn btn--primary btn--lg" type="button" id="btn-pesquisar" data-open-search aria-haspopup="dialog" aria-controls="search-dialog">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="7"/>
                 <path d="m20 20-4-4"/>
@@ -161,6 +163,27 @@
       </div>
     </section>
 
+    <!-- Painel exibido após a configuração; permanece oculto até a primeira pesquisa. -->
+    <section class="search-summary" id="resumo-pesquisa" aria-labelledby="search-summary-title" hidden>
+      <div class="container">
+        <div class="search-summary__panel">
+          <div class="search-summary__intro">
+            <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Pesquisa configurada</p>
+            <h2 id="search-summary-title" tabindex="-1">Sua pesquisa está pronta</h2>
+            <p>Estes filtros serão usados pelo agente. Todos resultados mostrados são fictícios</p>
+          </div>
+          <ul class="search-summary__chips" id="search-summary-chips" aria-label="Filtros escolhidos"></ul>
+          <button class="btn btn--ghost" type="button" data-open-search aria-haspopup="dialog" aria-controls="search-dialog">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+            </svg>
+            Editar filtros
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- Fontes demonstrativas que futuramente serão usadas no filtro de pesquisa. -->
     <section class="section" id="fontes" aria-labelledby="fontes-title">
       <div class="container">
@@ -209,9 +232,9 @@
           <div class="cta-panel__content">
             <p class="eyebrow">Comece agora</p>
             <h2 id="cta-title">Pronto para checar uma notícia?</h2>
-            <p>Escolha o tema, o período e as fontes. O agente faz o resto.</p>
+            <p>Escolha o tema, o período, o resumo e as fontes. O agente faz o resto.</p>
           </div>
-          <button class="btn btn--primary btn--lg" type="button" data-open-search>
+          <button class="btn btn--primary btn--lg" type="button" data-open-search aria-haspopup="dialog" aria-controls="search-dialog">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="11" cy="11" r="7"/>
               <path d="m20 20-4-4"/>
@@ -263,7 +286,355 @@
     </div>
   </footer>
 
-  <!-- Região viva: anuncia trocas de tema/contraste para tecnologias assistivas. -->
+  <!-- Modal de configuração: quatro etapas sequenciais em um único <dialog> nativo. -->
+  <dialog class="search-dialog" id="search-dialog" aria-labelledby="search-dialog-title" aria-describedby="search-dialog-description">
+    <form class="search-dialog__form" id="search-form" novalidate>
+      <header class="search-dialog__header">
+        <div>
+          <p class="search-dialog__eyebrow">Configurar pesquisa</p>
+          <h2 class="search-dialog__title" id="search-dialog-title">Vamos configurar sua pesquisa</h2>
+          <p class="search-dialog__description" id="search-dialog-description">Responda quatro perguntas rápidas. Você pode voltar e ajustar antes de pesquisar.</p>
+        </div>
+        <button class="search-dialog__close" type="button" data-close-search aria-label="Fechar configuração de pesquisa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="wizard-progress">
+        <div class="wizard-progress__track" aria-hidden="true">
+          <span class="wizard-progress__fill" id="wizard-progress-fill"></span>
+        </div>
+        <p class="wizard-progress__label" id="wizard-progress-label">Etapa 1 de 4</p>
+      </div>
+
+      <div class="search-dialog__body">
+        <!-- Etapa 1: tema/assunto principal da pesquisa. -->
+        <section class="wizard-step" data-wizard-step aria-labelledby="step-topic-title">
+          <h3 class="wizard-step__title" id="step-topic-title" tabindex="-1">Qual tema você deseja pesquisar?</h3>
+          <p class="wizard-step__help" id="step-topic-help">Escolha o assunto principal da verificação.</p>
+          <fieldset class="choice-fieldset" aria-describedby="step-topic-help">
+            <legend class="sr-only">Tema da pesquisa</legend>
+            <div class="choice-grid choice-grid--topics">
+              <label class="choice">
+                <input type="radio" name="topic" value="todos" data-label="Todos os temas" checked>
+                <span class="choice__content">
+                  <span class="choice__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="4" y="4" width="6" height="6" rx="1"/>
+                      <rect x="14" y="4" width="6" height="6" rx="1"/>
+                      <rect x="4" y="14" width="6" height="6" rx="1"/>
+                      <rect x="14" y="14" width="6" height="6" rx="1"/>
+                    </svg>
+                  </span>
+                  <span class="choice__text">
+                    <span class="choice__title">Todos os temas</span>
+                    <span class="choice__desc">Sem restringir o assunto.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="topic" value="tecnologias" data-label="Tecnologias">
+                <span class="choice__content">
+                  <span class="choice__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="7" y="7" width="10" height="10" rx="2"/>
+                      <path d="M9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3"/>
+                    </svg>
+                  </span>
+                  <span class="choice__text">
+                    <span class="choice__title">Tecnologias</span>
+                    <span class="choice__desc">Inovação, internet e IA.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="topic" value="medicina" data-label="Medicina">
+                <span class="choice__content">
+                  <span class="choice__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 12h4l2-5 4 10 2-5h6"/>
+                    </svg>
+                  </span>
+                  <span class="choice__text">
+                    <span class="choice__title">Medicina</span>
+                    <span class="choice__desc">Saúde, tratamentos e pesquisas.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="topic" value="ciencias" data-label="Ciências">
+                <span class="choice__content">
+                  <span class="choice__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 3h6M10 3v6L4.6 18a2 2 0 0 0 1.7 3h11.4a2 2 0 0 0 1.7-3L14 9V3"/>
+                      <path d="M7 15h10"/>
+                    </svg>
+                  </span>
+                  <span class="choice__text">
+                    <span class="choice__title">Ciências</span>
+                    <span class="choice__desc">Descobertas e estudos.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="topic" value="politica" data-label="Política">
+                <span class="choice__content">
+                  <span class="choice__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m3 10 9-6 9 6M5 10v8m4-8v8m6-8v8m4-8v8M3 21h18"/>
+                    </svg>
+                  </span>
+                  <span class="choice__text">
+                    <span class="choice__title">Política</span>
+                    <span class="choice__desc">Governo, leis e eleições.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- Etapa 2: recência das notícias que serão buscadas. -->
+        <section class="wizard-step" data-wizard-step aria-labelledby="step-period-title" hidden>
+          <h3 class="wizard-step__title" id="step-period-title" tabindex="-1">Em qual período deseja pesquisar?</h3>
+          <p class="wizard-step__help" id="step-period-help">Quanto mais recente, mais atual é o contexto da notícia.</p>
+          <fieldset class="choice-fieldset" aria-describedby="step-period-help">
+            <legend class="sr-only">Período da pesquisa</legend>
+            <div class="choice-grid choice-grid--periods">
+              <label class="choice">
+                <input type="radio" name="period" value="7d" data-label="Últimos 7 dias" checked>
+                <span class="choice__content">
+                  <span class="choice__badge" aria-hidden="true">7</span>
+                  <span class="choice__text">
+                    <span class="choice__title">Últimos 7 dias</span>
+                    <span class="choice__desc">Notícias bem recentes.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="period" value="30d" data-label="Últimos 30 dias">
+                <span class="choice__content">
+                  <span class="choice__badge" aria-hidden="true">30</span>
+                  <span class="choice__text">
+                    <span class="choice__title">Últimos 30 dias</span>
+                    <span class="choice__desc">Um mês de contexto.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="period" value="1ano" data-label="Último ano">
+                <span class="choice__content">
+                  <span class="choice__badge" aria-hidden="true">365</span>
+                  <span class="choice__text">
+                    <span class="choice__title">Último ano</span>
+                    <span class="choice__desc">Para temas que evoluem devagar.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- Etapa 3: quantidade de detalhes do resumo final. -->
+        <section class="wizard-step" data-wizard-step aria-labelledby="step-summary-title" hidden>
+          <h3 class="wizard-step__title" id="step-summary-title" tabindex="-1">Qual resumo você deseja?</h3>
+          <p class="wizard-step__help" id="step-summary-help">Você poderá ler o resultado com mais ou menos detalhes.</p>
+          <fieldset class="choice-fieldset" aria-describedby="step-summary-help">
+            <legend class="sr-only">Nível de resumo</legend>
+            <div class="choice-grid choice-grid--summaries">
+              <label class="choice">
+                <input type="radio" name="summary" value="muito" data-label="Muito resumido">
+                <span class="choice__content">
+                  <span class="choice__summary-level choice__summary-level--short" aria-hidden="true"><span></span><span></span><span></span></span>
+                  <span class="choice__text">
+                    <span class="choice__title">Muito resumido</span>
+                    <span class="choice__desc">Uma visão rápida, em poucas linhas.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="summary" value="medio" data-label="Medianamente resumido" checked>
+                <span class="choice__content">
+                  <span class="choice__summary-level choice__summary-level--medium" aria-hidden="true"><span></span><span></span><span></span></span>
+                  <span class="choice__text">
+                    <span class="choice__title">Medianamente resumido</span>
+                    <span class="choice__desc">Um panorama com os pontos principais.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="summary" value="pouco" data-label="Pouco resumido">
+                <span class="choice__content">
+                  <span class="choice__summary-level choice__summary-level--long" aria-hidden="true"><span></span><span></span><span></span></span>
+                  <span class="choice__text">
+                    <span class="choice__title">Pouco resumido</span>
+                    <span class="choice__desc">Mais contexto, detalhes e explicações.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- Etapa 4: fontes consultadas, com seleção múltipla. -->
+        <section class="wizard-step" data-wizard-step aria-labelledby="step-sources-title" hidden>
+          <h3 class="wizard-step__title" id="step-sources-title" tabindex="-1">De quais fontes deseja pesquisar?</h3>
+          <p class="wizard-step__help" id="step-sources-help">Selecione uma ou mais fontes. O G1 já vem marcado.</p>
+          <fieldset class="choice-fieldset" aria-describedby="step-sources-help">
+            <legend class="sr-only">Fontes da pesquisa</legend>
+            <div class="choice-grid choice-grid--sources">
+              <label class="choice">
+                <input type="checkbox" name="sources" value="g1" data-label="G1" checked>
+                <span class="choice__content">
+                  <span class="choice__source-mark" aria-hidden="true">G1</span>
+                  <span class="choice__text">
+                    <span class="choice__title">G1</span>
+                    <span class="choice__desc">Fonte padrão.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="checkbox" name="sources" value="agencia-brasil" data-label="Agência Brasil">
+                <span class="choice__content">
+                  <span class="choice__source-mark" aria-hidden="true">AB</span>
+                  <span class="choice__text">
+                    <span class="choice__title">Agência Brasil</span>
+                    <span class="choice__desc">Notícias do governo federal.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="checkbox" name="sources" value="bbc" data-label="BBC News Brasil">
+                <span class="choice__content">
+                  <span class="choice__source-mark" aria-hidden="true">BBC</span>
+                  <span class="choice__text">
+                    <span class="choice__title">BBC News Brasil</span>
+                    <span class="choice__desc">Cobertura internacional.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="checkbox" name="sources" value="reuters" data-label="Reuters">
+                <span class="choice__content">
+                  <span class="choice__source-mark" aria-hidden="true">R</span>
+                  <span class="choice__text">
+                    <span class="choice__title">Reuters</span>
+                    <span class="choice__desc">Agência internacional.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="checkbox" name="sources" value="folha" data-label="Folha de S.Paulo">
+                <span class="choice__content">
+                  <span class="choice__source-mark" aria-hidden="true">F</span>
+                  <span class="choice__text">
+                    <span class="choice__title">Folha de S.Paulo</span>
+                    <span class="choice__desc">Jornal nacional.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+
+              <label class="choice">
+                <input type="checkbox" name="sources" value="fiocruz" data-label="Fiocruz">
+                <span class="choice__content">
+                  <span class="choice__source-mark" aria-hidden="true">Fi</span>
+                  <span class="choice__text">
+                    <span class="choice__title">Fiocruz</span>
+                    <span class="choice__desc">Saúde e ciência.</span>
+                  </span>
+                  <span class="choice__check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <p class="wizard-step__error" id="sources-error" role="alert" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 8v5m0 3h.01"/>
+            </svg>
+            Escolha pelo menos uma fonte para continuar.
+          </p>
+        </section>
+      </div>
+
+      <footer class="search-dialog__footer">
+        <button class="btn btn--ghost search-dialog__back" type="button" data-wizard-back hidden>Voltar</button>
+        <button class="btn btn--primary" type="submit" id="wizard-next">
+          <span id="wizard-next-label">Continuar</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14m0 0-6-6m6 6-6 6"/>
+          </svg>
+        </button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Região viva: anuncia trocas de tema/contraste e conclusão da pesquisa. -->
   <div class="sr-only" id="a11y-status" role="status" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>
