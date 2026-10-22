@@ -25,5 +25,3 @@ VerificaAI julga a confiabildiade de uma postagem a partir de varios fatores:
 Codigo exibido não é funcional e dados mostrados são fictícios
 
 ## Ideathon Uninassau Olinda 2026
-
-Projeto p
