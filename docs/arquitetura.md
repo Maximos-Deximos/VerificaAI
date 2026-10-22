@@ -224,7 +224,7 @@ ARQUITETURA GERAL
                  
                  
 RAG (Retrieval-Augmented Generation)
-text```
+```text
 +------------------------------------------+
 |          NOTICIA OU ALEGACAO             |
 |                                          |
