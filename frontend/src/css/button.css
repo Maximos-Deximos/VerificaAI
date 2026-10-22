@@ -1,0 +1,73 @@
+.btn {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.68rem 1.25rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-size: 0.98rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+.btn--lg {
+  min-height: 52px;
+  padding: 0.85rem 1.55rem;
+  font-size: 1.02rem;
+}
+
+.btn--primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: 0 8px 20px rgba(11, 107, 54, 0.16);
+}
+
+.btn--primary:hover {
+  background: var(--primary-hover);
+  color: var(--on-primary);
+  box-shadow: 0 12px 26px rgba(11, 107, 54, 0.22);
+  transform: translateY(-1px);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(11, 107, 54, 0.18);
+}
+
+.btn--ghost {
+  border-color: var(--border-strong);
+  background: transparent;
+  color: var(--text);
+}
+
+.btn--ghost:hover {
+  border-color: var(--text-muted);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.btn:focus-visible {
+  box-shadow: 0 0 0 5px var(--focus-halo);
+}
+
+:root[data-contrast="high"] .btn {
+  border-width: 3px;
+}
+
+:root[data-contrast="high"] .btn--primary {
+  border-color: var(--text);
+}
+
+:root[data-contrast="high"] .btn--ghost {
+  border-color: var(--border);
+}

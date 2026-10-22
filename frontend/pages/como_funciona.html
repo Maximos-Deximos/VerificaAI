@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Entenda como o VerificaAI pesquisa notícias, cruza fontes confiáveis e calcula o ranqueamento de veracidade.">
+  <meta name="theme-color" id="theme-color" content="#00008b">
+  <title>Como funciona — VerificaAI</title>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("verificaai-theme");
+        var contrast = localStorage.getItem("verificaai-contrast");
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = theme === "light" || theme === "dark" ? theme : (prefersDark ? "dark" : "light");
+        if (contrast === "high") {
+          document.documentElement.dataset.contrast = "high";
+        }
+      } catch (error) {
+        document.documentElement.dataset.theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="../src/css/global.css">
+  <link rel="stylesheet" href="../src/css/header.css">
+  <link rel="stylesheet" href="../src/css/button.css">
+  <link rel="stylesheet" href="../src/css/layout.css">
+  <link rel="stylesheet" href="../src/css/footer.css">
+  <script src="../src/js/theme_change.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="brand" href="../index.html" aria-label="VerificaAI — voltar ao início">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </span>
+        <span class="brand__name">Verifica<span>AI</span></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="#como-funciona" aria-current="page">Como funciona</a></li>
+          <li><a href="#ranqueamento">Ranqueamento</a></li>
+          <li><a href="../index.html#fontes">Fontes</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Ativar tema escuro">
+          <svg class="theme-switch__icon theme-switch__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <span class="theme-switch__track" aria-hidden="true">
+            <span class="theme-switch__thumb"></span>
+          </span>
+          <svg class="theme-switch__icon theme-switch__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>
+          </svg>
+        </button>
+
+        <button class="contrast-toggle" id="contrast-toggle" type="button" aria-pressed="false" aria-label="Ativar alto contraste">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3v18"/>
+            <path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" stroke="none"/>
+          </svg>
+          <span class="contrast-toggle__label">Alto contraste</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <section class="page-hero" aria-labelledby="page-title">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Você está aqui">
+          <ol>
+            <li><a href="../index.html">Início</a></li>
+            <li aria-current="page">Como funciona</li>
+          </ol>
+        </nav>
+        <p class="eyebrow">Entenda o VerificaAI</p>
+        <h1 id="page-title">Como funciona</h1>
+        <p class="page-hero__lead">Conheça o caminho que a informação percorre, do momento em que você escolhe o que pesquisar até o ranqueamento que explica o nível de confiança de cada resultado.</p>
+      </div>
+    </section>
+
+    <section class="section" id="como-funciona" aria-labelledby="como-funciona-title">
+      <div class="container">
+        <div class="section__header">
+          <p class="eyebrow">Simples do início ao fim</p>
+          <h2 id="como-funciona-title">Três passos para verificar uma notícia</h2>
+          <p>Sem termos técnicos e com configurações guiadas para você não se perder.</p>
+        </div>
+
+        <ol class="steps">
+          <li class="step-card">
+            <span class="step-card__number" aria-hidden="true">1</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6h16M4 12h16M4 18h16"/>
+                <circle cx="9" cy="6" r="2"/>
+                <circle cx="15" cy="12" r="2"/>
+                <circle cx="8" cy="18" r="2"/>
+              </svg>
+            </span>
+            <h3>Escolha o que pesquisar</h3>
+            <p>Selecione o tema, o período, o nível de resumo e as fontes. Cada escolha é explicada em uma janela simples.</p>
+          </li>
+
+          <li class="step-card">
+            <span class="step-card__number" aria-hidden="true">2</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3 9 5-9 5-9-5 9-5Z"/>
+                <path d="m3 12 9 5 9-5"/>
+                <path d="m3 16 9 5 9-5"/>
+              </svg>
+            </span>
+            <h3>O agente cruza as fontes</h3>
+            <p>O agente compara a informação com veículos confiáveis e analisa a autenticidade de quem publicou.</p>
+          </li>
+
+          <li class="step-card">
+            <span class="step-card__number" aria-hidden="true">3</span>
+            <span class="step-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.6 19a9 9 0 1 1 14.8 0"/>
+                <path d="m12 12 4-4"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
+            </span>
+            <h3>Veja o ranqueamento e o porquê</h3>
+            <p>Cada resultado mostra uma nota de 0% a 100% e os motivos que levaram o agente àquela conclusão.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="ranqueamento" aria-labelledby="ranqueamento-title">
+      <div class="container ranking">
+        <div class="ranking__content">
+          <p class="eyebrow">Transparência</p>
+          <h2 id="ranqueamento-title">Um ranqueamento que mostra o porquê</h2>
+          <p>O agente não entrega apenas um número. Ele revela os fatores que aumentaram ou diminuíram a confiança na informação.</p>
+
+          <ul class="feature-list">
+            <li>
+              <span class="feature-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+              </span>
+              <div>
+                <strong>Cross-referência de informações</strong>
+                <span>A mesma notícia é comparada entre veículos e bases de pesquisa.</span>
+              </div>
+            </li>
+            <li>
+              <span class="feature-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+              </span>
+              <div>
+                <strong>Autenticidade do autor</strong>
+                <span>O histórico de publicações e a verificação do perfil entram na análise.</span>
+              </div>
+            </li>
+            <li>
+              <span class="feature-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
+              </span>
+              <div>
+                <strong>Reputação da fonte</strong>
+                <span>Sites com histórico de desinformação reduzem a nota do conteúdo.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="score-card" aria-labelledby="score-card-title">
+          <div class="score-card__header">
+            <div>
+              <p class="score-card__label">Exemplo ilustrativo</p>
+              <h3 id="score-card-title">Análise de veracidade</h3>
+            </div>
+            <span class="score-card__badge">Demonstrativo</span>
+          </div>
+
+          <div class="score-card__score">
+            <div class="score-ring" style="--score: 86%" role="img" aria-label="Ranqueamento de veracidade: 86 por cento">
+              <span class="score-ring__value" aria-hidden="true">86<small>%</small></span>
+            </div>
+            <div class="score-card__verdict">
+              <strong>Alta confiabilidade</strong>
+              <p>Informação consistente entre as fontes consultadas.</p>
+            </div>
+          </div>
+
+          <ul class="score-card__factors">
+            <li class="factor factor--positive">
+              <span class="factor-icon" aria-hidden="true">+</span>
+              Autor verificado e com histórico consistente.
+            </li>
+            <li class="factor factor--positive">
+              <span class="factor-icon" aria-hidden="true">+</span>
+              Fonte reconhecida, sem histórico de desinformação.
+            </li>
+            <li class="factor factor--positive">
+              <span class="factor-icon" aria-hidden="true">+</span>
+              Informação confirmada por outros veículos.
+            </li>
+            <li class="factor factor--negative">
+              <span class="factor-icon" aria-hidden="true">−</span>
+              Publicação sem data explícita no corpo do texto.
+            </li>
+          </ul>
+
+          <p class="score-card__note">Dados fictícios, apenas para demonstrar a interface.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cta" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-panel">
+          <div class="cta-panel__content">
+            <p class="eyebrow">Próximo passo</p>
+            <h2 id="cta-title">Veja a aplicação em ação</h2>
+            <p>Volte ao início e inicie uma pesquisa demonstrativa com o tema e as fontes que preferir.</p>
+          </div>
+          <a class="btn btn--primary btn--lg" href="../index.html">
+            Voltar ao início
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14m0 0-6-6m6 6-6 6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand-col">
+          <a class="footer__brand" href="../index.html" aria-label="VerificaAI — voltar ao início">
+            <span class="footer__brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            VerificaAI
+          </a>
+          <p>Uma prova de conceito de combate à desinformação com apoio de inteligência artificial.</p>
+        </div>
+
+        <nav class="footer__nav" aria-label="Links do rodapé">
+          <h2 class="footer__title">Navegação</h2>
+          <ul>
+            <li><a href="../index.html">Início</a></li>
+            <li><a href="#como-funciona">Como funciona</a></li>
+            <li><a href="#ranqueamento">Ranqueamento</a></li>
+            <li><a href="../index.html#fontes">Fontes</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="footer__title">Acessibilidade</h2>
+          <p>Use Tab para navegar, o controle do header para alternar entre claro e escuro e o botão de alto contraste quando precisar.</p>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 VerificaAI. Projeto acadêmico.</p>
+        <p>Todos os dados exibidos nesta versão são fictícios.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sr-only" id="a11y-status" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

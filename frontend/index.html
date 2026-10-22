@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="VerificaAI: aplicação que cruza fontes confiáveis e ranqueia a veracidade de notícias com o apoio de um agente de IA.">
+  <meta name="theme-color" id="theme-color" content="#00008b">
+  <title>VerificaAI — Combate à desinformação com IA</title>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("verificaai-theme");
+        var contrast = localStorage.getItem("verificaai-contrast");
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = theme === "light" || theme === "dark" ? theme : (prefersDark ? "dark" : "light");
+        if (contrast === "high") {
+          document.documentElement.dataset.contrast = "high";
+        }
+      } catch (error) {
+        document.documentElement.dataset.theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="src/css/global.css">
+  <link rel="stylesheet" href="src/css/header.css">
+  <link rel="stylesheet" href="src/css/button.css">
+  <link rel="stylesheet" href="src/css/layout.css">
+  <link rel="stylesheet" href="src/css/footer.css">
+  <script src="src/js/theme_change.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="brand" href="#inicio" aria-label="VerificaAI — voltar ao início">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </span>
+        <span class="brand__name">Verifica<span>AI</span></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="pages/como_funciona.html">Como funciona</a></li>
+          <li><a href="pages/como_funciona.html#ranqueamento">Ranqueamento</a></li>
+          <li><a href="#fontes">Fontes</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="theme-switch" id="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Ativar tema escuro">
+          <svg class="theme-switch__icon theme-switch__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <span class="theme-switch__track" aria-hidden="true">
+            <span class="theme-switch__thumb"></span>
+          </span>
+          <svg class="theme-switch__icon theme-switch__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/>
+          </svg>
+        </button>
+
+        <button class="contrast-toggle" id="contrast-toggle" type="button" aria-pressed="false" aria-label="Ativar alto contraste">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3v18"/>
+            <path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" stroke="none"/>
+          </svg>
+          <span class="contrast-toggle__label">Alto contraste</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Combate à desinformação com IA</p>
+          <h1 id="hero-title">Descubra o que é verdade antes de compartilhar.</h1>
+          <p class="hero__lead">O VerificaAI lê notícias em fontes confiáveis, cruza informações e apresenta um ranqueamento de veracidade — sempre explicando o porquê.</p>
+          <div class="hero__actions">
+            <button class="btn btn--primary btn--lg" type="button" id="btn-pesquisar" data-open-search>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="m20 20-4-4"/>
+              </svg>
+              Pesquisar
+            </button>
+            <a class="btn btn--ghost btn--lg" href="pages/como_funciona.html">
+              Como funciona
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 5v14m0 0-6-6m6 6 6-6"/>
+              </svg>
+            </a>
+          </div>
+          <p class="hero__note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 11v5m0-8h.01"/>
+            </svg>
+            Prova de conceito: resultados e fontes serão demonstrativos.
+          </p>
+        </div>
+
+        <aside class="hero__panel" aria-label="Ilustração do funcionamento do agente de verificação">
+          <div class="agent-card">
+            <div class="agent-card__header">
+              <span class="agent-card__status">
+                <span class="status-dot" aria-hidden="true"></span>
+                Agente VerificaAI
+              </span>
+              <span class="agent-card__tag">Análise</span>
+            </div>
+
+            <div class="agent-card__shield" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+
+            <p class="agent-card__title">Informação em análise</p>
+            <p class="agent-card__text">Cruzando fontes, autoria e histórico de publicação.</p>
+
+            <ul class="agent-card__checks">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+                6 fontes cruzadas
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
+                Autor verificado
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                Histórico consultado
+              </li>
+            </ul>
+
+            <div class="agent-card__sources" aria-label="Exemplos de fontes consultadas">
+              <span>G1</span>
+              <span>BBC</span>
+              <span>Reuters</span>
+              <span>+3</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="fontes" aria-labelledby="fontes-title">
+      <div class="container">
+        <div class="section__header section__header--center">
+          <p class="eyebrow">Curadoria</p>
+          <h2 id="fontes-title">Fontes confiáveis, você escolhe</h2>
+          <p>Monte sua pesquisa com quantas fontes quiser.</p>
+        </div>
+
+        <ul class="sources-grid" aria-label="Fontes disponíveis">
+          <li class="source-card">
+            <span class="source-card__mark" aria-hidden="true">G1</span>
+            <span class="source-card__name">G1</span>
+            <span class="source-card__tag">Padrão</span>
+          </li>
+          <li class="source-card">
+            <span class="source-card__mark" aria-hidden="true">AB</span>
+            <span class="source-card__name">Agência Brasil</span>
+          </li>
+          <li class="source-card">
+            <span class="source-card__mark" aria-hidden="true">BBC</span>
+            <span class="source-card__name">BBC News Brasil</span>
+          </li>
+          <li class="source-card">
+            <span class="source-card__mark" aria-hidden="true">R</span>
+            <span class="source-card__name">Reuters</span>
+          </li>
+          <li class="source-card">
+            <span class="source-card__mark" aria-hidden="true">F</span>
+            <span class="source-card__name">Folha de S.Paulo</span>
+          </li>
+          <li class="source-card">
+            <span class="source-card__mark" aria-hidden="true">Fi</span>
+            <span class="source-card__name">Fiocruz</span>
+          </li>
+        </ul>
+
+        <p class="sources-note">As fontes exibidas são exemplos para a prova de conceito.</p>
+      </div>
+    </section>
+
+    <section class="section section--cta" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-panel">
+          <div class="cta-panel__content">
+            <p class="eyebrow">Comece agora</p>
+            <h2 id="cta-title">Pronto para checar uma notícia?</h2>
+            <p>Escolha o tema, o período e as fontes. O agente faz o resto.</p>
+          </div>
+          <button class="btn btn--primary btn--lg" type="button" data-open-search>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/>
+              <path d="m20 20-4-4"/>
+            </svg>
+            Pesquisar
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand-col">
+          <a class="footer__brand" href="#inicio" aria-label="VerificaAI — voltar ao início">
+            <span class="footer__brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            VerificaAI
+          </a>
+          <p>Uma prova de conceito de combate à desinformação com apoio de inteligência artificial.</p>
+        </div>
+
+        <nav class="footer__nav" aria-label="Links do rodapé">
+          <h2 class="footer__title">Navegação</h2>
+          <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="pages/como_funciona.html">Como funciona</a></li>
+            <li><a href="pages/como_funciona.html#ranqueamento">Ranqueamento</a></li>
+            <li><a href="#fontes">Fontes</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="footer__title">Acessibilidade</h2>
+          <p>Use Tab para navegar, o controle do header para alternar entre claro e escuro e o botão de alto contraste quando precisar.</p>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 VerificaAI. Projeto acadêmico.</p>
+        <p>Todos os dados exibidos nesta versão são fictícios.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="sr-only" id="a11y-status" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
