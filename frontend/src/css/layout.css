@@ -433,7 +433,7 @@
   margin-top: 0.08rem;
   color: var(--text-muted);
   font-size: 0.9rem;
-  align-items: center;
+  align-content: center;
 }
 
 /* Cartão de exemplo do ranqueamento, com fatores positivos e negativos. */

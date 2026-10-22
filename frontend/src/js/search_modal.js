@@ -164,6 +164,24 @@
     };
   }
 
+  function createSearchDetail(config, restored) {
+    return {
+      topic: config.topic,
+      period: config.period,
+      summary: config.summary,
+      sources: config.sources.slice(),
+      restored: Boolean(restored),
+      labels: {
+        topic: getLabel("topic", config.topic),
+        period: getLabel("period", config.period),
+        summary: getLabel("summary", config.summary),
+        sources: config.sources.map(function (source) {
+          return getLabel("sources", source);
+        })
+      }
+    };
+  }
+
   /* Cria um chip do resumo sem usar innerHTML, evitando injeção de conteúdo. */
   function addSummaryChip(label, value) {
     var item = document.createElement("li");
@@ -283,9 +301,14 @@
   /* Depois de concluir, o foco vai para o resumo, que é o novo conteúdo. */
   function focusSummary() {
     var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var resultsSection = document.getElementById("news-results");
+    var resultsTitle = document.getElementById("news-results-title");
+    var focusResults = resultsSection && !resultsSection.hidden && resultsTitle;
+    var focusTarget = focusResults ? resultsTitle : summaryTitle;
+    var scrollTarget = focusResults ? resultsSection : summarySection;
 
-    summaryTitle.focus({ preventScroll: true });
-    summarySection.scrollIntoView({
+    focusTarget.focus({ preventScroll: true });
+    scrollTarget.scrollIntoView({
       behavior: reduceMotion ? "auto" : "smooth",
       block: "center"
     });
@@ -297,7 +320,7 @@
     if (focusSummaryAfterClose) {
       focusSummaryAfterClose = false;
       window.setTimeout(focusSummary, 0);
-      announce("Pesquisa configurada. Confira o resumo dos filtros na página.");
+      announce("Pesquisa demonstrativa concluída. Confira os resultados e os filtros.");
       return;
     }
 
@@ -343,26 +366,11 @@
       return;
     }
 
-    var detail = {
-      topic: config.topic,
-      period: config.period,
-      summary: config.summary,
-      sources: config.sources.slice(),
-      labels: {
-        topic: getLabel("topic", config.topic),
-        period: getLabel("period", config.period),
-        summary: getLabel("summary", config.summary),
-        sources: config.sources.map(function (source) {
-          return getLabel("sources", source);
-        })
-      }
-    };
-
     writeStoredConfig(config);
     renderSummary(config);
     focusSummaryAfterClose = true;
 
-    document.dispatchEvent(new CustomEvent("verificaai:search", { detail: detail }));
+    document.dispatchEvent(new CustomEvent("verificaai:search", { detail: createSearchDetail(config) }));
     closeDialog();
   });
 
@@ -382,6 +390,6 @@
 
   if (storedConfig) {
     renderSummary(storedConfig);
+    document.dispatchEvent(new CustomEvent("verificaai:search", { detail: createSearchDetail(storedConfig, true) }));
   }
 })();
-

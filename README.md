@@ -22,6 +22,6 @@ VerificaAI julga a confiabildiade de uma postagem a partir de varios fatores:
 
 ## Prova de Conceito
 
-Codigo exibido não é funcional e dados mostrados são fictícios
+Os resultados, as fontes atribuídas, as datas, as justificativas e as pontuações exibidas são inteiramente fictícios e servem apenas para demonstrar a interface. Os filtros alteram os exemplos apresentados, mas o projeto não consulta notícias reais nem calcula credibilidade.
 
 ## Ideathon Uninassau Olinda 2026
