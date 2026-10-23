@@ -526,9 +526,10 @@ body.dialog-open {
 }
 
 .news-card__score {
-  color: var(--success);
+  color: hsl(var(--score-hue, 0), 75%, 28%);
   font-size: 1.25rem;
   font-weight: 900;
+  font-variant-numeric: tabular-nums;
 }
 
 .news-card__title {
@@ -613,9 +614,31 @@ body.dialog-open {
 }
 
 .news-detail-dialog__score {
-  color: var(--success);
-  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.news-detail-dialog__score-value {
+  color: hsl(var(--score-hue, 0), 75%, 28%);
+  font-size: 1.15rem;
   font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+:root[data-theme="dark"] .news-card__score,
+:root[data-theme="dark"] .news-detail-dialog__score-value {
+  color: hsl(var(--score-hue, 0), 82%, 70%);
+}
+
+:root[data-contrast="high"] .news-card__score,
+:root[data-contrast="high"] .news-detail-dialog__score-value {
+  color: hsl(var(--score-hue, 0), 100%, 24%);
+}
+
+:root[data-theme="dark"][data-contrast="high"] .news-card__score,
+:root[data-theme="dark"][data-contrast="high"] .news-detail-dialog__score-value {
+  color: hsl(var(--score-hue, 0), 100%, 72%);
 }
 
 .news-detail-dialog__analysis {
