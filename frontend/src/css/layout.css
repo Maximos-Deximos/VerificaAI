@@ -412,12 +412,15 @@
   margin-top: 0.08rem;
   flex: 0 0 auto;
   place-items: center;
+  place-content: center;
   border-radius: 50%;
   background: var(--success-bg);
   color: var(--success);
+  line-height: 0;
 }
 
 .feature-list__icon svg {
+  display: block;
   width: 15px;
   height: 15px;
 }
@@ -428,12 +431,11 @@
   font-size: 0.97rem;
 }
 
-.feature-list span {
+.feature-list li > div > span {
   display: block;
   margin-top: 0.08rem;
   color: var(--text-muted);
   font-size: 0.9rem;
-  align-content: center;
 }
 
 /* Cartão de exemplo do ranqueamento, com fatores positivos e negativos. */
