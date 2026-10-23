@@ -9,6 +9,7 @@
  *    que são usados pelos tokens de cor definidos em global.css.
  * 4. Mantém os controles do header sincronizados com o estado atual.
  * 5. Salva no localStorage apenas quando o usuário faz uma escolha manual.
+ * 6. Sincroniza a escolha entre abas/páginas e ao voltar pelo histórico.
  */
 (function () {
   "use strict";
@@ -18,7 +19,6 @@
   var CONTRAST_KEY = "verificaai-contrast";
 
   /* Elementos globais e controles acessíveis presentes no header. */
-  var root = document.documentElement;
   var root = document.documentElement;
   var darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
   var themeSwitch = document.getElementById("theme-switch");
@@ -45,6 +45,16 @@
       localStorage.setItem(key, value);
     } catch (error) {
       return;
+    }
+  }
+
+  /* Confirma se o localStorage pode ser consultado neste contexto. */
+  function storageIsAvailable() {
+    try {
+      window.localStorage.getItem(THEME_KEY);
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 
@@ -169,10 +179,33 @@
     applyTheme(event.matches ? "dark" : "light", false);
   }
 
+  /*
+   * Reaplica as preferências salvas sem gravar novamente no localStorage.
+   * Usado quando outra aba muda o tema e quando a página volta do cache
+   * de navegação (bfcache), mantendo index e como_funciona sincronizados.
+   */
+  function syncFromStorage() {
+    var storedTheme = readPreference(THEME_KEY);
+
+    applyTheme(storedTheme === "light" || storedTheme === "dark" ? storedTheme : systemTheme(), false);
+    applyContrast(readPreference(CONTRAST_KEY) === "high", false);
+  }
+
+  /*
+   * O evento storage é disparado nas outras abas da mesma origem, mas não
+   * na aba que fez a alteração. Assim, ao alternar o tema em qualquer página,
+   * as demais páginas abertas acompanham a mudança em tempo real.
+   */
+  function onStorageChange(event) {
+    if (event.key !== null && event.key !== THEME_KEY && event.key !== CONTRAST_KEY) {
+      return;
+    }
+
+    syncFromStorage();
+  }
+
   /* Inicialização: preferência salva tem prioridade; senão, usa o sistema. */
-  var storedTheme = readPreference(THEME_KEY);
-  applyTheme(storedTheme === "light" || storedTheme === "dark" ? storedTheme : systemTheme(), false);
-  applyContrast(readPreference(CONTRAST_KEY) === "high", false);
+  syncFromStorage();
 
   /* Alterna entre claro e escuro e salva a nova preferência. */
   if (themeSwitch) {
@@ -191,6 +224,19 @@
       announce(enableHighContrast ? "Alto contraste ativado." : "Alto contraste desativado.");
     });
   }
+
+  /* Mantém o tema sincronizado com alterações feitas em outra página/aba. */
+  window.addEventListener("storage", onStorageChange);
+
+  /*
+   * Ao voltar pelo histórico, o navegador pode restaurar a página do bfcache
+   * com o estado antigo. Reaplica a preferência salva para evitar divergência.
+   */
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted && storageIsAvailable()) {
+      syncFromStorage();
+    }
+  });
 
   /* Compatibilidade com navegadores antigos que usam addListener. */
   if (typeof darkQuery.addEventListener === "function") {
