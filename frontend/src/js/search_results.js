@@ -169,6 +169,16 @@
     return "Pontuação fictícia limitada";
   }
 
+  /*
+   * Converte a nota em uma matiz HSL:
+   * 0 = vermelho, 50 = amarelo, 100 = verde.
+   */
+  function setScoreHue(element, score) {
+    var safeScore = Math.max(0, Math.min(100, Number(score) || 0));
+    var hue = Math.round(safeScore * 12) / 10;
+    element.style.setProperty("--score-hue", String(hue));
+  }
+
   function normalizeConfig(detail) {
     var topic = detail && Object.prototype.hasOwnProperty.call(TOPICS, detail.topic) ? detail.topic : "todos";
     var period = detail && Object.prototype.hasOwnProperty.call(PERIOD_DAYS, detail.period) ? detail.period : "7d";
@@ -322,6 +332,7 @@
     button.setAttribute("aria-haspopup", "dialog");
     button.setAttribute("aria-controls", "news-detail-dialog");
     score.setAttribute("aria-label", "Pontuação fictícia de credibilidade: " + news.score + " por cento");
+    setScoreHue(score, news.score);
 
     title.appendChild(button);
     meta.appendChild(source);
@@ -374,7 +385,12 @@
     lastDetailTrigger = trigger;
     detailTitle.textContent = news.title;
     detailMeta.textContent = "Tema: " + news.topic + " · Fonte demonstrativa: " + news.source + " · Data fictícia: " + news.date;
-    detailScore.textContent = "Pontuação fictícia de credibilidade: " + news.score + "%";
+    detailScore.textContent = "Pontuação fictícia de credibilidade: ";
+
+    var detailScoreValue = createElement("strong", "news-detail-dialog__score-value", news.score + "%");
+    setScoreHue(detailScoreValue, news.score);
+    detailScore.appendChild(detailScoreValue);
+
     detailSummary.textContent = news.summary;
     detailLongDescription.textContent = news.details;
     detailRationale.textContent = news.rationale + " " + news.scoreDescription + ".";
